@@ -1,5 +1,8 @@
+//styles
+import { InButton } from "./styles";
+
 const SigninButton = () => {
-  return <div></div>;
+  return <InButton color={`#5B5B5B`}>Sign In</InButton>;
 };
 
 export default SigninButton;
