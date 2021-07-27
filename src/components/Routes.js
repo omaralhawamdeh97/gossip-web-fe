@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router";
 import Home from "./screens/Home/index";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/Signup";
+import Chat from "./screens/Chat";
 
 const Routes = () => {
   return (
@@ -16,6 +17,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/signup">
         <SignUp />
+      </Route>
+      <Route exact path="/chat">
+        <Chat />
       </Route>
     </Switch>
   );
