@@ -1,9 +1,9 @@
 //react
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 //styles
-import SigninButton from "../../Buttons/SigninButton";
+
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { IconButton, InputAdornment, TextField } from "@material-ui/core";
@@ -12,14 +12,23 @@ import { SignInScreen, Title, Form, Label } from "./styles";
 //redux
 import { useDispatch } from "react-redux";
 import { signin } from "../../../store/actions/authActions";
+import SigninButton from "../../buttons/SigninButton";
 
 const SignIn = () => {
   //hooks
   const history = useHistory();
   const dispatch = useDispatch();
   //states
+  useEffect(() => {
+    if (user.username !== "" && user.password !== "") {
+      setCheck(false);
+    } else {
+      setCheck(true);
+    }
+  }, [user]);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ username: "", password: "" });
+  const [check, setCheck] = useState(true);
 
   //methods
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -71,7 +80,7 @@ const SignIn = () => {
             }}
           />
         </div>
-        <SigninButton type="submit" />
+        <SigninButton type="submit" check={check} />
       </Form>
     </SignInScreen>
   );
