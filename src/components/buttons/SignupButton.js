@@ -1,8 +1,12 @@
 //styles
 import { InButton } from "./styles";
 
-const SignupButton = () => {
-  return <InButton color={`transparent`}>Sign Up</InButton>;
+const SignupButton = ({ check }) => {
+  return (
+    <InButton color={`transparent`} disabled={check}>
+      Sign Up
+    </InButton>
+  );
 };
 
 export default SignupButton;

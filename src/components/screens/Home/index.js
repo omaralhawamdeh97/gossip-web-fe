@@ -1,8 +1,9 @@
 //styles
 import { Title, HomeDiv, ButtonsDiv } from "./styles";
 //buttons
-import SigninButton from "../../Buttons/SigninButton";
-import SignupButton from "../../Buttons/SignupButton";
+
+import SigninButton from "../../buttons/SigninButton";
+import SignupButton from "../../buttons/SignupButton";
 //react
 import { Link } from "react-router-dom";
 //icons
