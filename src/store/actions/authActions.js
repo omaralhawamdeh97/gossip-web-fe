@@ -2,18 +2,20 @@ import instance from "./instance";
 import * as actionTypes from "./actionsTypes";
 import decode from "jwt-decode";
 // ACTIONS
-export const signup = (user, history) => {
+export const signup = (user, history, setMess) => {
   return async (dispatch) => {
     try {
       const res = await instance.post("/signup", user);
       dispatch(setUser(res.data.token));
       history.push("/");
     } catch (error) {
-      console.log(error);
+      if (error.message.includes("500")) {
+        setMess("");
+      }
     }
   };
 };
-export const signin = (user, history) => {
+export const signin = (user, history, setMess) => {
   return async (dispatch) => {
     try {
       const res = await instance.post("/signin", user);
@@ -21,7 +23,9 @@ export const signin = (user, history) => {
       dispatch(setUser(res.data.token));
       history.push("/");
     } catch (error) {
-      console.log(error);
+      if (error.message.includes("401")) {
+        setMess("");
+      }
     }
   };
 };

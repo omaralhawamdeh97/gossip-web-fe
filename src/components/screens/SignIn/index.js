@@ -1,24 +1,27 @@
 //react
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-
+import { Link, useHistory } from "react-router-dom";
 //styles
-
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { IconButton, InputAdornment, TextField } from "@material-ui/core";
-//components
+import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { SignInScreen, Title, Form, Label } from "./styles";
+//components
+import SigninButton from "../../buttons/SigninButton";
 //redux
 import { useDispatch } from "react-redux";
 import { signin } from "../../../store/actions/authActions";
-import SigninButton from "../../buttons/SigninButton";
 
 const SignIn = () => {
   //hooks
   const history = useHistory();
   const dispatch = useDispatch();
   //states
+  const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({ username: "", password: "" });
+  const [check, setCheck] = useState(true);
+  const [mess, setMess] = useState("none");
+
   useEffect(() => {
     if (user.username !== "" && user.password !== "") {
       setCheck(false);
@@ -26,9 +29,6 @@ const SignIn = () => {
       setCheck(true);
     }
   }, [user]);
-  const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({ username: "", password: "" });
-  const [check, setCheck] = useState(true);
 
   //methods
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -39,8 +39,7 @@ const SignIn = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signin(user));
-    history.push("/");
+    dispatch(signin(user, history, setMess));
   };
 
   return (
@@ -80,7 +79,15 @@ const SignIn = () => {
             }}
           />
         </div>
+        <p style={{ display: mess, color: "red" }}>
+          User name and password does not match
+        </p>
         <SigninButton type="submit" check={check} />
+        <Grid item>
+          <Link to="/signup" variant="body2">
+            {"Don't have an account? Sign Up"}
+          </Link>
+        </Grid>
       </Form>
     </SignInScreen>
   );

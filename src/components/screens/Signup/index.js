@@ -1,12 +1,12 @@
 //react
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 //styles
 import { SignUpScreen, Title, Form, Label } from "./styles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { IconButton, InputAdornment, TextField } from "@material-ui/core";
+import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 //components
 import SignupButton from "../../buttons/SignupButton";
 //redux
@@ -19,6 +19,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   //states
+  const [mess, setMess] = useState("none");
+
   const [check, setCheck] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -41,8 +43,7 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signup(user));
-    history.push("/");
+    dispatch(signup(user, history, setMess));
   };
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -93,7 +94,13 @@ const SignUp = () => {
             }}
           />
         </div>
+        <p style={{ display: mess, color: "red" }}>User name already exists</p>
         <SignupButton type="submit" check={check} />
+        <Grid item style={{ marginBottom: 10 }}>
+          <Link to="/signin" variant="body2">
+            {"Already have an account? Sign In"}
+          </Link>
+        </Grid>
       </Form>
     </SignUpScreen>
   );

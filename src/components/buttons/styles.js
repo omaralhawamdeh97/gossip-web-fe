@@ -6,6 +6,6 @@ export const InButton = styled.button`
   width: 150px;
   height: 50px;
   border-radius: 8px;
-  margin: 40px;
+  margin: 20px;
   background-color: ${(props) => props.color};
 `;
