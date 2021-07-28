@@ -1,6 +1,17 @@
 import ChatCard from "../../ChatCard";
-import { ChatDiv, MainDiv } from "./styles";
-import { FaEllipsisH, FaPlusCircle, FaRegSun } from "react-icons/fa";
+
+//Icons
+import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
+
+//Styling
+import {
+  ChatDiv,
+  Input,
+  InputText,
+  MainDiv,
+  SendButton,
+  TopDiv,
+} from "./styles";
 
 const Chat = () => {
   return (
@@ -11,20 +22,14 @@ const Chat = () => {
             marginLeft: 7,
           }}
         >
-          Gossipies <FaEllipsisH style={{ marginLeft: 150 }} />
+          Gossipies <FaAlignJustify style={{ marginLeft: 150 }} />
         </h2>
-        <input
-          style={{
-            width: 330,
-            alignSelf: "center",
-            borderRadius: 10,
-            marginLeft: 7,
-            marginTop: 10,
-            borderColor: "white",
-          }}
-          placeholder={"Search here..."}
-        />
-        <div />
+        <Input placeholder={"Search here..."} />
+
+        <ChatCard />
+        <ChatCard />
+        <ChatCard />
+        <ChatCard />
         <ChatCard />
       </ChatDiv>
       <div
@@ -33,46 +38,17 @@ const Chat = () => {
           width: "100%",
         }}
       >
-        <div
-          style={{
-            padding: 30,
-            paddingTop: 30,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <TopDiv>
           <h2>Dina isbaih</h2>
-          <FaRegSun size={30} />
-        </div>
-        <input
-          style={{
-            width: "70%",
-            height: 40,
-            position: "absolute",
-            bottom: 15,
-            right: 10,
-            borderRadius: 15,
-          }}
-        />
-        <button
-          style={{
-            width: 60,
-            height: 40,
-            position: "absolute",
-            bottom: 15,
-            right: 10,
-            borderTopRightRadius: 15,
-            borderBottomRightRadius: 15,
-          }}
-        >
-          Send
-        </button>
+        </TopDiv>
+        <InputText />
+        <SendButton>Send</SendButton>
         <FaPlusCircle
           style={{
             position: "absolute",
             bottom: 15,
             left: "25.5%",
+            color: "gray",
           }}
           size={40}
         />
