@@ -7,5 +7,5 @@ export const ChatCardStyle = styled.div`
   display: flex;
   align-items: center;
   padding-left: 7px;
-  margin-top: 70px;
+  margin-top: 30px;
 `;
