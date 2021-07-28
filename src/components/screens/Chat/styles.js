@@ -1,32 +1,39 @@
 import styled from "styled-components";
 export const MainDiv = styled.div`
   display: flex;
-  flex-direction: row;
+`;
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 10px;
+`;
+export const HeaderTwo = styled.div`
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  padding-bottom: 10px;
 `;
 
 export const ChatDiv = styled.div`
-  padding-top: 30px;
+  padding-top: 10px;
   width: 350px;
-  height: 655px;
   background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Input = styled.input`
   width: 300px;
+  margin-inline: 10px;
   align-self: center;
   justify-content: center;
   border-radius: 10px;
-  margin-left: 7px;
   margin-top: 10px;
   border-color: white;
 `;
 
 export const TopDiv = styled.div`
   padding: 30px;
-  padding-top: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom-style: solid;
 `;
 
