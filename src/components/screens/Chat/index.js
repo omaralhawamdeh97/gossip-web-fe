@@ -6,26 +6,38 @@ import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
 //Styling
 import {
   ChatDiv,
+  Header,
+  HeaderTwo,
   Input,
   InputText,
   MainDiv,
   SendButton,
   TopDiv,
 } from "./styles";
+import MessageCard from "../Messages";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "../../../store/actions/messageActions";
+import ChatBody from "./ChatBody";
 
 const Chat = () => {
+  const [body, setBody] = useState({ body: "" });
+  const dispatch = useDispatch();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(addMessage(body));
+  };
+
   return (
     <MainDiv>
       <ChatDiv>
-        <h2
-          style={{
-            marginLeft: 7,
-          }}
-        >
-          Gossipies <FaAlignJustify style={{ marginLeft: 150 }} />
-        </h2>
-        <Input placeholder={"Search here..."} />
-
+        <HeaderTwo>
+          <Header>
+            <h2>Gossipies</h2>
+            <FaAlignJustify size={25} />
+          </Header>
+          <Input placeholder={"Search here..."} />
+        </HeaderTwo>
         <ChatCard />
         <ChatCard />
         <ChatCard />
@@ -41,17 +53,22 @@ const Chat = () => {
         <TopDiv>
           <h2>Dina isbaih</h2>
         </TopDiv>
-        <InputText />
-        <SendButton>Send</SendButton>
-        <FaPlusCircle
-          style={{
-            position: "absolute",
-            bottom: 15,
-            left: "25.5%",
-            color: "gray",
-          }}
-          size={40}
-        />
+        <ChatBody chatId />
+        <div>
+          <InputText
+            onChange={(v) => setBody({ ...body, body: v.target.value })}
+          />
+          <SendButton onClick={handleSubmit}>Send</SendButton>
+          <FaPlusCircle
+            style={{
+              position: "absolute",
+              bottom: 15,
+              // left: "29.5%",
+              color: "gray",
+            }}
+            size={40}
+          />
+        </div>
       </div>
     </MainDiv>
   );
