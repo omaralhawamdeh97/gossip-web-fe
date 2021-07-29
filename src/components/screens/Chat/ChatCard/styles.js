@@ -9,3 +9,8 @@ export const ChatCardStyle = styled.div`
   padding-left: 7px;
   margin-top: 10px;
 `;
+export const ChatCardImage = styled.img`
+  height: 60px;
+  width: 60px;
+  border-radius: 500px;
+`;

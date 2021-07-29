@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
-import { SignInScreen, Title, Form, Label } from "./styles";
+import { SignInScreen, Title, Form, Label, Error } from "./styles";
 //components
 import SigninButton from "../../buttons/SigninButton";
 //redux
@@ -79,9 +79,9 @@ const SignIn = () => {
             }}
           />
         </div>
-        <p style={{ display: mess, color: "red" }}>
+        <Error style={{ display: mess }}>
           User name and password does not match
-        </p>
+        </Error>
         <SigninButton type="submit" check={check} />
         <Grid item>
           <Link to="/signup" variant="body2">

@@ -19,7 +19,6 @@ export const signin = (user, history, setMess) => {
   return async (dispatch) => {
     try {
       const res = await instance.post("/signin", user);
-      console.log(res.data);
       dispatch(setUser(res.data.token));
       history.push("/");
     } catch (error) {
@@ -80,17 +79,18 @@ export const fetchUsers = () => {
   };
 };
 
-// export const updateUser = (body,user) => {
-//   return async (dispatch) => {
-//     try {
-//       const res = await instance.put(`${user.id}`,body);
-
-//       dispatch({
-//         type: actionTypes.FETCH_USERS,
-//         payload: res.data,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// };
+export const updateUser = (body, user) => {
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem("myToken");
+      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const res = await instance.put(`${user.id}`, body);
+      dispatch({
+        type: actionTypes.FETCH_USERS,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
