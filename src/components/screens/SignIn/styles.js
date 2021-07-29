@@ -48,3 +48,6 @@ export const Input = styled.input`
   font-weight: bold;
   color: black;
 `;
+export const Error = styled.p`
+  color: red;
+`;
