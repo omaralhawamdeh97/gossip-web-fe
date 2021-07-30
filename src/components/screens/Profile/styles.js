@@ -45,3 +45,7 @@ export const SaveDiv = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const Error = styled.p`
+  color: red;
+`;

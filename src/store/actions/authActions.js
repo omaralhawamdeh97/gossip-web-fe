@@ -79,18 +79,27 @@ export const fetchUsers = () => {
   };
 };
 
-export const updateUser = (body, user) => {
+export const updateUser = (body, user, setPasswordError, setNameError) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const res = await instance.put(`${user.id}`, body);
+      const formData = new FormData();
+      for (const key in body) formData.append(key, body[key]);
+      const res = await instance.put(`${user.id}`, formData);
+      console.log(formData, "Actions");
       dispatch({
-        type: actionTypes.FETCH_USERS,
+        type: actionTypes.UPDATE_USER,
         payload: res.data,
       });
     } catch (error) {
-      console.log(error);
+      if (error.message.includes("401")) {
+        setPasswordError(true);
+      } else if (error.message.includes("402")) {
+        setNameError(true);
+      } else {
+        console.log(error);
+      }
     }
   };
 };

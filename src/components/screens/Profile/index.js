@@ -8,13 +8,15 @@ import {
   Save,
   ImageWrap,
   SaveDiv,
+  Error,
 } from "./styles";
 import { Button, TextField } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
-import ImageSearchIcon from "@material-ui/icons/ImageSearch"; //Redux
+import ImageSearchIcon from "@material-ui/icons/ImageSearch";
+//Redux
 import { useDispatch, useSelector } from "react-redux";
 //React
 import { useState } from "react";
@@ -37,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Profile() {
+  const [nameError, setNameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const classes = useStyles();
   const user = useSelector((state) => state.authReducer.user);
   const [profile, setProfile] = useState({
@@ -65,11 +69,13 @@ function Profile() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(updateUser(profile, user));
+    dispatch(updateUser(profile, user, setNameError, setPasswordError));
+    handleClose();
   };
+
   return (
     <ProfileCard>
-      <ProfileImage src={user.image} />
+      <ProfileImage src="https://ih1.redbubble.net/image.528151419.4599/flat,750x,075,f-pad,750x1000,f8f8f8.u6.jpg" />
       <Button variant="outlined" type="button" onClick={handleOpen}>
         Edit my profile
       </Button>
@@ -112,6 +118,7 @@ function Profile() {
                 type="text"
                 size="small"
               />
+              {nameError ? <Error>Username already exist!</Error> : <></>}
               <Label>Fullname</Label>
               <TextField
                 fullWidth
@@ -130,6 +137,7 @@ function Profile() {
                 type="password"
                 size="small"
               />
+              {passwordError ? <Error>Invalid Password!</Error> : <></>}
               <Label>New Password</Label>
               <TextField
                 fullWidth
