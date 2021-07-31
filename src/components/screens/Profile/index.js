@@ -20,7 +20,10 @@ import ImageSearchIcon from "@material-ui/icons/ImageSearch";
 import { useDispatch, useSelector } from "react-redux";
 //React
 import { useState } from "react";
-import { updateUser } from "../../../store/actions/authActions";
+import {
+  updateUser,
+  updateUserImage,
+} from "../../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,9 +47,8 @@ function Profile() {
   const classes = useStyles();
   const user = useSelector((state) => state.authReducer.user);
   const [profile, setProfile] = useState({
-    username: "",
-    fullname: "",
-    image: "",
+    username: user.username,
+    fullname: user.fullname,
     currentpassword: "",
     password: "",
     userId: user.id,
@@ -61,21 +63,22 @@ function Profile() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleImage = (event) => {
-    setProfile({ ...profile, image: event.target.files[0] });
+  const handleImage = (e) => {
+    dispatch(updateUserImage({ image: e.target.files[0] }, user));
   };
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(updateUser(profile, user, setNameError, setPasswordError));
-    handleClose();
+    dispatch(
+      updateUser(profile, user, setNameError, setPasswordError, handleClose)
+    );
   };
 
   return (
     <ProfileCard>
-      <ProfileImage src="https://ih1.redbubble.net/image.528151419.4599/flat,750x,075,f-pad,750x1000,f8f8f8.u6.jpg" />
+      <ProfileImage src={user.image} />
       <Button variant="outlined" type="button" onClick={handleOpen}>
         Edit my profile
       </Button>
@@ -117,6 +120,7 @@ function Profile() {
                 variant="outlined"
                 type="text"
                 size="small"
+                value={profile.username}
               />
               {nameError ? <Error>Username already exist!</Error> : <></>}
               <Label>Fullname</Label>
@@ -127,6 +131,7 @@ function Profile() {
                 variant="outlined"
                 type="text"
                 size="small"
+                value={profile.fullname}
               />
               <Label>Current Password</Label>
               <TextField
