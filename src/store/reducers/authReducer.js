@@ -14,11 +14,15 @@ const authReducer = (state = initialState, action) => {
         loading: false,
       };
     case actionTypes.UPDATE_USER:
-      console.log(action.payload, "rejjj");
       return {
         ...state,
         // user: action.payload,
         loading: false,
+      };
+    case actionTypes.FOUND_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;
