@@ -79,19 +79,23 @@ export const fetchUsers = () => {
   };
 };
 
-export const updateUser = (body, user, setPasswordError, setNameError) => {
+export const updateUser = (
+  body,
+  user,
+  setPasswordError,
+  setNameError,
+  handleClose
+) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const formData = new FormData();
-      for (const key in body) formData.append(key, body[key]);
-      const res = await instance.put(`${user.id}`, formData);
-      console.log(formData, "Actions");
+      const res = await instance.put(`${user.id}`, body);
       dispatch({
         type: actionTypes.UPDATE_USER,
         payload: res.data,
       });
+      handleClose();
     } catch (error) {
       if (error.message.includes("401")) {
         setPasswordError(true);
@@ -100,6 +104,25 @@ export const updateUser = (body, user, setPasswordError, setNameError) => {
       } else {
         console.log(error);
       }
+    }
+  };
+};
+
+export const updateUserImage = (body, user) => {
+  return async (dispatch) => {
+    try {
+      const formData = new FormData();
+      for (const key in body) formData.append(key, body[key]);
+      const token = localStorage.getItem("myToken");
+      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const res = await instance.put(`${user.id}/image`, formData);
+      console.log(res, "res");
+      dispatch({
+        type: actionTypes.UPDATE_USER,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 };
