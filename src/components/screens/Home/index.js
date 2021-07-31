@@ -1,7 +1,6 @@
 //styles
 import { Title, HomeDiv, ButtonsDiv } from "./styles";
 //buttons
-
 import SigninButton from "../../buttons/SigninButton";
 import SignupButton from "../../buttons/SignupButton";
 //react

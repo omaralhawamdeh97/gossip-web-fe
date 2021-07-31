@@ -1,8 +1,5 @@
-import ChatCard from "./ChatCard";
-
 //Icons
 import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
-
 //Styling
 import {
   ChatDiv,
@@ -17,17 +14,32 @@ import {
   ProfileTitle,
   Texting,
 } from "./styles";
+//Components
+import FriendCard from "./FriendCard";
 import MessageCard from "../Messages";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../../../store/actions/messageActions";
 import ChatBody from "./ChatBody";
 import Profile from "../Profile";
+//React
+import { useEffect, useState } from "react";
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFoundUser } from "../../../store/actions/authActions";
 
 const Chat = () => {
+  //Hooks
+  const dispatch = useDispatch();
+  //Selector
+  const user = useSelector((state) => state.authReducer.user);
+  //useState
+  var hello;
+  useEffect(() => {
+    console.log("ddd");
+    dispatch(fetchFoundUser(user));
+  }, [hello]);
   const [profile, setProfile] = useState(false);
   const [body, setBody] = useState({ body: "" });
-  const dispatch = useDispatch();
+  //methods
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(addMessage(body));
@@ -40,6 +52,14 @@ const Chat = () => {
       setProfile(true);
     }
   };
+  var friends = [];
+  if (user.from || user.to) {
+    const fromList = user.from.map((friend) => friend);
+    const toList = user.to.map((friend) => friend);
+    friends = [...fromList, ...toList].map((friend) => (
+      <FriendCard friend={friend} />
+    ));
+  }
   return (
     <MainDiv>
       <ChatDiv>
@@ -54,21 +74,11 @@ const Chat = () => {
             <Input placeholder={"Search here..."} />
           )}
         </HeaderTwo>
-        {profile ? (
-          <Profile />
-        ) : (
-          <>
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-            <ChatCard />
-          </>
-        )}
+        {profile ? <Profile /> : <>{friends}</>}
       </ChatDiv>
       <TopDivWrapper>
         <TopDiv>
-          <h2>Dina isbaih</h2>
+          <h2>{user.username}</h2>
         </TopDiv>
         <ChatBody chatId />
         <Texting>

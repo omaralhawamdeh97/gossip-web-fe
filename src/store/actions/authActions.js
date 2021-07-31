@@ -126,3 +126,19 @@ export const updateUserImage = (body, user) => {
     }
   };
 };
+
+export const fetchFoundUser = (user) => {
+  return async (dispatch) => {
+    console.log(1);
+    try {
+      const res = await instance.get(`/users/${user.id}`);
+      console.log(2);
+      dispatch({
+        type: actionTypes.FOUND_USER,
+        payload: res?.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

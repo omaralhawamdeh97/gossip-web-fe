@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ChatCardStyle = styled.div`
+export const FriendCardStyle = styled.div`
   background-color: lightgray;
   height: 80px;
   flex-direction: row;
@@ -9,7 +9,7 @@ export const ChatCardStyle = styled.div`
   padding-left: 7px;
   margin-top: 10px;
 `;
-export const ChatCardImage = styled.img`
+export const FriendCardImage = styled.img`
   height: 60px;
   width: 60px;
   border-radius: 500px;
