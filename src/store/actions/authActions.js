@@ -91,10 +91,8 @@ export const updateUser = (
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.put(`${user.id}`, body);
-      dispatch({
-        type: actionTypes.UPDATE_USER,
-        payload: res.data,
-      });
+      dispatch(setUser(res.data.token));
+
       handleClose();
     } catch (error) {
       if (error.message.includes("401")) {
@@ -116,7 +114,7 @@ export const updateUserImage = (body, user) => {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.put(`${user.id}/image`, formData);
-      console.log(res, "res");
+
       dispatch({
         type: actionTypes.UPDATE_USER,
         payload: res.data,
