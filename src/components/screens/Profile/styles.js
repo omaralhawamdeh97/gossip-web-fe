@@ -4,6 +4,7 @@ export const ProfileImage = styled.img`
   height: 150px;
   width: 150px;
   border-radius: 500px;
+  margin-bottom: 25px;
 `;
 export const ProfileCard = styled.div`
   /* background-color: black; */

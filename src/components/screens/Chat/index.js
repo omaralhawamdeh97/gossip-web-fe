@@ -22,19 +22,20 @@ import ChatBody from "./ChatBody";
 import Profile from "../Profile";
 //React
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoundUser } from "../../../store/actions/authActions";
 
 const Chat = () => {
   //Hooks
+  const history = useHistory();
   const dispatch = useDispatch();
   //Selector
   const user = useSelector((state) => state.authReducer.user);
   //useState
   var hello;
   useEffect(() => {
-    console.log("ddd");
     dispatch(fetchFoundUser(user));
   }, [hello]);
   const [profile, setProfile] = useState(false);
@@ -60,6 +61,7 @@ const Chat = () => {
       <FriendCard friend={friend} />
     ));
   }
+  if (!user) history.replace("/");
   return (
     <MainDiv>
       <ChatDiv>
