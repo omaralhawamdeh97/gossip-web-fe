@@ -13,17 +13,20 @@ const authReducer = (state = initialState, action) => {
         user: action.payload,
         loading: false,
       };
+
     case actionTypes.UPDATE_USER:
       return {
         ...state,
-        // user: action.payload,
+        // user: action.payload, //Remove unused code
         loading: false,
       };
+
     case actionTypes.FOUND_USER:
       return {
         ...state,
         user: action.payload,
       };
+
     default:
       return state;
   }

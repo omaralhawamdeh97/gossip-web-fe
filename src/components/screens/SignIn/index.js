@@ -1,22 +1,28 @@
-//react
+//React
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-//styles
+
+//Redux
+import { useDispatch } from "react-redux";
+
+//Styling
+import { SignInScreen, Title, Form, Label, Error } from "./styles";
+import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
-import { SignInScreen, Title, Form, Label, Error } from "./styles";
-//components
+
+//Components
 import SigninButton from "../../buttons/SigninButton";
-//redux
-import { useDispatch } from "react-redux";
+
+//Actions
 import { signin } from "../../../store/actions/authActions";
 
 const SignIn = () => {
-  //hooks
+  //Hooks
   const history = useHistory();
   const dispatch = useDispatch();
-  //states
+
+  //States
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ username: "", password: "" });
   const [check, setCheck] = useState(true);
@@ -30,7 +36,7 @@ const SignIn = () => {
     }
   }, [user]);
 
-  //methods
+  //Methods
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
@@ -59,7 +65,7 @@ const SignIn = () => {
           </div>
           <Label>Password</Label>
           <TextField
-            style={{ width: 400 }}
+            style={{ width: 400 }} //Remove inline styling
             onChange={handleChange}
             name="password"
             variant="outlined"
@@ -79,6 +85,7 @@ const SignIn = () => {
             }}
           />
         </div>
+        {/**Remove inline styling */}
         <Error style={{ display: mess }}>
           User name and password does not match
         </Error>

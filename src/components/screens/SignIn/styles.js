@@ -15,6 +15,7 @@ export const Title = styled.h2`
   font-family: Solway;
   font-size: 50px;
 `;
+
 export const Form = styled.form`
   flex-direction: column;
   align-items: center;
@@ -23,7 +24,7 @@ export const Form = styled.form`
   width: 500px;
   height: 400px;
   background-color: #a7a99e;
-  /* opacity: 0.6; */
+  /* opacity: 0.6; */ //Remove unused code
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
 `;

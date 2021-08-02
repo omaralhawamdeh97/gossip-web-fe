@@ -1,5 +1,10 @@
-//Icons
-import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
+//React
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+
 //Styling
 import {
   ChatDiv,
@@ -15,19 +20,18 @@ import {
   Texting,
   ChatsTitle,
 } from "./styles";
+import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
+
 //Components
 import FriendCard from "./FriendCard";
-import MessageCard from "../Messages";
-import { addMessage } from "../../../store/actions/messageActions";
+import MessageCard from "../Messages"; //Remove unused import
 import ChatBody from "./ChatBody";
 import Profile from "../Profile";
-//React
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-//Redux
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFoundUser } from "../../../store/actions/authActions";
 import ChatCard from "./ChatCard";
+
+//Actions
+import { addMessage } from "../../../store/actions/messageActions";
+import { fetchFoundUser } from "../../../store/actions/authActions";
 
 const Chat = () => {
   //Hooks
@@ -46,14 +50,16 @@ const Chat = () => {
   useEffect(() => {
     dispatch(fetchFoundUser(user));
   }, [hello]);
+
   const [profile, setProfile] = useState(false);
 
-  //methods
+  //Methods
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(addMessage({ ...body, chatId: ID }));
     setBody({ ...body, body: "" });
   };
+
   const handleProfile = () => {
     if (profile === true) {
       setProfile(false);
@@ -61,6 +67,7 @@ const Chat = () => {
       setProfile(true);
     }
   };
+
   var friends = [];
   if (user.from || user.to) {
     const fromList = user.from.map((friend) => friend);
@@ -69,6 +76,7 @@ const Chat = () => {
       <FriendCard friend={friend} />
     ));
   }
+
   var chatList;
   if (user.chats) {
     chatList = user.chats.map((chat) => (
@@ -82,6 +90,7 @@ const Chat = () => {
       </button>
     ));
   }
+
   if (!user) history.replace("/");
 
   return (
@@ -118,6 +127,7 @@ const Chat = () => {
             value={body.body}
           />
           <SendButton onClick={handleSubmit}>Send</SendButton>
+          {/*Remove inline styling */}
           <FaPlusCircle
             style={{
               position: "absolute",

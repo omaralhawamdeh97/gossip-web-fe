@@ -1,4 +1,10 @@
-//styles
+//React
+import { useState } from "react";
+
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+
+//Styling
 import {
   ProfileCard,
   ProfileImage,
@@ -16,14 +22,6 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageSearchIcon from "@material-ui/icons/ImageSearch";
-//Redux
-import { useDispatch, useSelector } from "react-redux";
-//React
-import { useState } from "react";
-import {
-  updateUser,
-  updateUserImage,
-} from "../../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -41,11 +39,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//Actions
+import {
+  updateUser,
+  updateUserImage,
+} from "../../../store/actions/authActions";
+
+//Convert to arrow function
 function Profile() {
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.authReducer.user);
+
   const [nameError, setNameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const classes = useStyles();
-  const user = useSelector((state) => state.authReducer.user);
+  const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState({
     username: user.username,
     fullname: user.fullname,
@@ -53,8 +63,6 @@ function Profile() {
     password: "",
     userId: user.id,
   });
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -63,12 +71,15 @@ function Profile() {
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleImage = (e) => {
     dispatch(updateUserImage({ image: e.target.files[0] }, user));
   };
+
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(
@@ -94,11 +105,13 @@ function Profile() {
           timeout: 500,
         }}
       >
+        {/**Remove inline styling */}
         <Fade in={open} style={{ backgroundColor: "#e6e8e9" }}>
           <div className={classes.paper}>
             <Form onSubmit={handleSubmit}>
               <ImageWrap>
                 <ModalImage src={user.image} />
+                {/**Remove inline styling */}
                 <Button component="label" style={{ paddingBottom: "35px" }}>
                   <ImageSearchIcon />
                   <TextField
@@ -152,7 +165,6 @@ function Profile() {
                 type="password"
                 size="small"
               />
-
               <SaveDiv>
                 <Save type="submit">Save Changes</Save>
               </SaveDiv>

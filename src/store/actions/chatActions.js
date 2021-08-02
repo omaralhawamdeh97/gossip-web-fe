@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
-// ACTIONS
+
 export const addChat = (newChat) => {
   return async (dispatch) => {
     try {
@@ -28,7 +28,6 @@ export const fetchChats = (chatId) => {
   return async (dispatch) => {
     try {
       const res = await instance.get(`/chats/${chatId}`);
-
       dispatch({
         type: actionTypes.FETCH_CHAT,
         payload: res.data,

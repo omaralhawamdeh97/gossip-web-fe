@@ -1,16 +1,18 @@
 import styled from "styled-components";
+
 export const MainDiv = styled.div`
   background-color: #f5f7f8;
   height: 100vh;
-
   display: flex;
 `;
+
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-inline: 10px;
 `;
+
 export const HeaderTwo = styled.div`
   border-bottom-style: ${(props) => (props.line ? "none" : "solid")};
   border-bottom-color: black;
@@ -27,7 +29,6 @@ export const ChatDiv = styled.div`
 
 export const Input = styled.input`
   background-color: #f5f7f8;
-
   width: 300px;
   margin-inline: 10px;
   align-self: center;
@@ -44,7 +45,6 @@ export const TopDiv = styled.div`
 
 export const InputText = styled.input`
   background-color: #f5f7f8;
-
   width: 60%;
   height: 40px;
   position: absolute;
@@ -62,32 +62,37 @@ export const SendButton = styled.button`
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 `;
+
 export const TopDivWrapper = styled.div`
   align-items: "center";
   width: 100%;
 `;
+
 export const ProfileTitle = styled.h3`
   font-style: italic;
   margin-top: 25px;
   text-align: center;
   font-size: 25;
 `;
+
 export const Texting = styled.div`
   background-color: #f5f7f8;
 `;
+
 export const ChatsTitle = styled.h3`
   font-style: italic;
   margin-top: 25px;
-
   font-size: 25;
 `;
 
 export const ChatBodyDiv = styled.div`
   align-items: flex-start;
 `;
+
 export const InnerDiv = styled.ul`
   align-self: flex-end;
 `;
+
 export const Line = styled.p`
   display: flex;
   justify-content: flex-end;

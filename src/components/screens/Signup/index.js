@@ -1,26 +1,29 @@
-//react
+//React
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-//styles
+//Redux
+import { useDispatch } from "react-redux";
+
+//Styling
 import { SignUpScreen, Title, Form, Label } from "./styles";
+import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
-//components
+
+//Components
 import SignupButton from "../../buttons/SignupButton";
-//redux
-import { useDispatch } from "react-redux";
+
+//Actions
 import { signup } from "../../../store/actions/authActions";
 
 const SignUp = () => {
-  //hooks
+  //Hooks
   const history = useHistory();
   const dispatch = useDispatch();
 
-  //states
+  //States
   const [mess, setMess] = useState("none");
-
   const [check, setCheck] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -37,7 +40,7 @@ const SignUp = () => {
     }
   }, [user]);
 
-  //methods
+  //Methods
   const handleChange = (event) =>
     setUser({ ...user, [event.target.name]: event.target.value });
 
@@ -45,8 +48,10 @@ const SignUp = () => {
     event.preventDefault();
     dispatch(signup(user, history, setMess));
   };
+
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   return (
     <SignUpScreen>
       <Title>Sign Up </Title>
@@ -74,7 +79,7 @@ const SignUp = () => {
           </div>
           <Label>Password</Label>
           <TextField
-            style={{ width: 400 }}
+            style={{ width: 400 }} //Remove inline styling
             onChange={handleChange}
             name="password"
             variant="outlined"
@@ -94,8 +99,10 @@ const SignUp = () => {
             }}
           />
         </div>
+        {/**Remove inline styling */}
         <p style={{ display: mess, color: "red" }}>User name already exists</p>
         <SignupButton type="submit" check={check} />
+        {/**Remove inline styling */}
         <Grid item style={{ marginBottom: 10 }}>
           <Link to="/signin" variant="body2">
             {"Already have an account? Sign In"}

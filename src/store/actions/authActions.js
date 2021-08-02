@@ -1,7 +1,7 @@
 import instance from "./instance";
 import * as actionTypes from "./actionsTypes";
 import decode from "jwt-decode";
-// ACTIONS
+
 export const signup = (user, history, setMess) => {
   return async (dispatch) => {
     try {
@@ -15,6 +15,7 @@ export const signup = (user, history, setMess) => {
     }
   };
 };
+
 export const signin = (user, history, setMess) => {
   return async (dispatch) => {
     try {
@@ -28,6 +29,7 @@ export const signin = (user, history, setMess) => {
     }
   };
 };
+
 export const signout = (history) => {
   localStorage.removeItem("myToken");
   history.push("/");
@@ -36,6 +38,7 @@ export const signout = (history) => {
     payload: null,
   };
 };
+
 export const checkForToken = () => {
   const token = localStorage.getItem("myToken");
   if (token) {
@@ -47,6 +50,7 @@ export const checkForToken = () => {
   }
   return setUser();
 };
+
 const setUser = (token) => {
   if (token) {
     localStorage.setItem("myToken", token);
@@ -64,11 +68,11 @@ const setUser = (token) => {
     };
   }
 };
+
 export const fetchUsers = () => {
   return async (dispatch) => {
     try {
       const res = await instance.get("/users");
-
       dispatch({
         type: actionTypes.FETCH_USERS,
         payload: res?.data,
@@ -92,7 +96,6 @@ export const updateUser = (
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.put(`${user.id}`, body);
       dispatch(setUser(res.data.token));
-
       handleClose();
     } catch (error) {
       if (error.message.includes("401")) {
@@ -114,7 +117,6 @@ export const updateUserImage = (body, user) => {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.put(`${user.id}/image`, formData);
-
       dispatch({
         type: actionTypes.UPDATE_USER,
         payload: res.data,

@@ -9,6 +9,7 @@ export const FriendCardStyle = styled.div`
   padding-left: 7px;
   margin-top: 10px;
 `;
+
 export const FriendCardImage = styled.img`
   height: 60px;
   width: 60px;

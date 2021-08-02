@@ -1,11 +1,12 @@
-//react
 import { Route, Switch } from "react-router";
-//components
+
+//Components
 import Home from "./screens/Home/index";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/Signup";
 import Chat from "./screens/Chat";
 import Profile from "./screens/Profile";
+
 const Routes = () => {
   return (
     <Switch>

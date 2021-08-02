@@ -1,3 +1,4 @@
+//Styling
 import { MessageCardStyle } from "./styles";
 
 const MessageCard = ({ message }) => {
