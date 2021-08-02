@@ -12,10 +12,11 @@ import { ChatBodyDiv, InnerDiv, Line } from "./styles";
 const ChatBody = ({ chatId }) => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chatReducer.chats);
+  const user = useSelector((state) => state.authReducer.user);
   if (chats) {
     messages = chats.messages.map((message) => (
-      <Line>
-        <MessageCard message={message} />
+      <Line userId={user.id} messageId={message.userId}>
+        <MessageCard message={message} user={user} messageId={message.userId} />
       </Line>
     ));
   } else {
@@ -24,13 +25,8 @@ const ChatBody = ({ chatId }) => {
   useEffect(() => {
     dispatch(fetchChats(chatId));
   }, [chatId, messages]);
-  const user = useSelector((state) => state.authReducer.user);
   var messages, loading;
-  return (
-    <ChatBodyDiv style={{ overflowY: "scroll", height: "80vh" }}>
-      {chats ? <InnerDiv>{messages}</InnerDiv> : loading}
-    </ChatBodyDiv>
-  );
+  return <ChatBodyDiv>{chats ? <>{messages}</> : loading}</ChatBodyDiv>;
 };
 
 export default ChatBody;

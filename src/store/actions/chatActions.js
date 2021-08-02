@@ -1,12 +1,21 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
 // ACTIONS
-export const addChat = (newChat) => {
+export const addChat = (newChat, userId, friendId, history) => {
   return async (dispatch) => {
     try {
-      const token = localStorage.getItem("myToken");
-      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.post(`/chats`, newChat);
+      console.log("hello");
+      console.log(res.data.id);
+      await instance.post(`/conversations`, {
+        chatId: res.data.id,
+        userId: userId,
+      });
+      await instance.post(`/conversations`, {
+        chatId: res.data.id,
+        userId: friendId,
+      });
+      history.push("/chat");
       dispatch({
         type: actionTypes.ADD_CHAT,
         payload: { newChat: res.data },
