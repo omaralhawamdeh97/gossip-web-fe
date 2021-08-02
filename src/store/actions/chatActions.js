@@ -24,11 +24,11 @@ export const addChat = (newChat) => {
   };
 };
 
-export const fetchChats = () => {
+export const fetchChats = (chatId) => {
   return async (dispatch) => {
     try {
-      const res = await instance.get("/chats");
-      console.log(res);
+      const res = await instance.get(`/chats/${chatId}`);
+
       dispatch({
         type: actionTypes.FETCH_CHAT,
         payload: res.data,

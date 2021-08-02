@@ -75,3 +75,21 @@ export const ProfileTitle = styled.h3`
 export const Texting = styled.div`
   background-color: #f5f7f8;
 `;
+export const ChatsTitle = styled.h3`
+  font-style: italic;
+  margin-top: 25px;
+
+  font-size: 25;
+`;
+
+export const ChatBodyDiv = styled.div`
+  align-items: flex-start;
+`;
+export const InnerDiv = styled.ul`
+  align-self: flex-end;
+`;
+export const Line = styled.p`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+`;

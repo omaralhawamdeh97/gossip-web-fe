@@ -13,6 +13,7 @@ import {
   TopDivWrapper,
   ProfileTitle,
   Texting,
+  ChatsTitle,
 } from "./styles";
 //Components
 import FriendCard from "./FriendCard";
@@ -26,24 +27,31 @@ import { useHistory } from "react-router";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoundUser } from "../../../store/actions/authActions";
+import ChatCard from "./ChatCard";
 
 const Chat = () => {
   //Hooks
   const history = useHistory();
   const dispatch = useDispatch();
+
   //Selector
   const user = useSelector((state) => state.authReducer.user);
+
   //useState
+  const [chat, setChat] = useState();
+  const [ID, setID] = useState("");
+  const [body, setBody] = useState({ body: "", chatId: ID });
+
   var hello;
   useEffect(() => {
     dispatch(fetchFoundUser(user));
   }, [hello]);
   const [profile, setProfile] = useState(false);
-  const [body, setBody] = useState({ body: "" });
+
   //methods
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addMessage(body));
+    dispatch(addMessage({ ...body, chatId: ID }));
     setBody({ ...body, body: "" });
   };
   const handleProfile = () => {
@@ -61,7 +69,21 @@ const Chat = () => {
       <FriendCard friend={friend} />
     ));
   }
+  var chatList;
+  if (user.chats) {
+    chatList = user.chats.map((chat) => (
+      <button
+        onClick={() => {
+          setChat(chat);
+          setID(chat.id);
+        }}
+      >
+        <ChatCard chat={chat} />
+      </button>
+    ));
+  }
   if (!user) history.replace("/");
+
   return (
     <MainDiv>
       <ChatDiv>
@@ -76,13 +98,20 @@ const Chat = () => {
             <Input placeholder={"Search here..."} />
           )}
         </HeaderTwo>
-        {profile ? <Profile /> : <>{friends}</>}
+        {profile ? (
+          <Profile />
+        ) : (
+          <>
+            <ChatsTitle>Chats..</ChatsTitle>
+            {chatList?.length !== 0 ? chatList : <h6>no chats</h6>}
+          </>
+        )}
       </ChatDiv>
       <TopDivWrapper>
         <TopDiv>
           <h2>{user.username}</h2>
         </TopDiv>
-        <ChatBody chatId />
+        {chat ? <ChatBody chatId={ID} /> : <></>}
         <Texting>
           <InputText
             onChange={(v) => setBody({ ...body, body: v.target.value })}

@@ -28,7 +28,6 @@ export const fetchMessages = () => {
   return async (dispatch) => {
     try {
       const res = await instance.get("/messages");
-      console.log(res);
       dispatch({
         type: actionTypes.FETCH_MESSAGE,
         payload: res.data,
