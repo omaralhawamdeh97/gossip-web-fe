@@ -1,17 +1,26 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
 
-export const fetchFriends = () => {
+export const addFriend = (newFriend, setOpen) => {
   return async (dispatch) => {
     try {
-      const res = await instance.get("/messages");
-      console.log(res);
+      const token = localStorage.getItem("myToken");
+      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const res = await instance.post(`/friends`, newFriend);
       dispatch({
-        type: actionTypes.FETCH_MESSAGE,
-        payload: res.data,
+        type: actionTypes.UPDATE_USER,
+        payload: null,
       });
+      setOpen(false);
     } catch (error) {
-      console.log(error);
+      if (error.message.includes("401")) {
+        dispatch({
+          type: actionTypes.SET_USER,
+          payload: null,
+        });
+      } else {
+        console.log(error);
+      }
     }
   };
 };

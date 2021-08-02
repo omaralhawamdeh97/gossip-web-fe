@@ -11,7 +11,7 @@ const chatReducer = (state = initialState, action) => {
       const { newChat } = action.payload;
       return {
         ...state,
-        chats: [...state.chats, newChat],
+        // chats: [...state.chats, newChat],
       };
 
     case actionTypes.FETCH_CHAT:

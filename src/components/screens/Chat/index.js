@@ -1,5 +1,6 @@
 //Icons
-import { FaAlignJustify, FaPlusCircle } from "react-icons/fa";
+import { FaAlignJustify } from "react-icons/fa";
+import { MdAddCircleOutline, MdPersonAdd } from "react-icons/md";
 //Styling
 import {
   ChatDiv,
@@ -14,6 +15,8 @@ import {
   ProfileTitle,
   Texting,
   ChatsTitle,
+  FriendList,
+  ListHeader,
 } from "./styles";
 //Components
 import FriendCard from "./FriendCard";
@@ -28,6 +31,7 @@ import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoundUser } from "../../../store/actions/authActions";
 import ChatCard from "./ChatCard";
+import AddFriend from "./AddFriend";
 
 const Chat = () => {
   //Hooks
@@ -41,6 +45,7 @@ const Chat = () => {
   const [chat, setChat] = useState();
   const [ID, setID] = useState("");
   const [body, setBody] = useState({ body: "", chatId: ID });
+  const [openModal, setOpenModal] = useState(false);
 
   var hello;
   useEffect(() => {
@@ -66,7 +71,7 @@ const Chat = () => {
     const fromList = user.from.map((friend) => friend);
     const toList = user.to.map((friend) => friend);
     friends = [...fromList, ...toList].map((friend) => (
-      <FriendCard friend={friend} />
+      <FriendCard friend={friend} userId={user.id} />
     ));
   }
   var chatList;
@@ -78,7 +83,7 @@ const Chat = () => {
           setID(chat.id);
         }}
       >
-        <ChatCard chat={chat} />
+        <ChatCard chat={chat} friends={friends} />
       </button>
     ));
   }
@@ -93,13 +98,31 @@ const Chat = () => {
             <FaAlignJustify size={25} onClick={handleProfile} />
           </Header>
           {profile ? (
-            <ProfileTitle>Profile</ProfileTitle>
+            <>
+              <ProfileTitle>Profile</ProfileTitle>
+            </>
           ) : (
             <Input placeholder={"Search here..."} />
           )}
         </HeaderTwo>
         {profile ? (
-          <Profile />
+          <>
+            <Profile />
+            <ListHeader>
+              <h4>Friends</h4>
+              <MdPersonAdd
+                onClick={() => setOpenModal(true)}
+                size={30}
+                style={{ alignSelf: "flex-end", marginRight: "10px" }}
+              />
+            </ListHeader>
+            <FriendList>{friends}</FriendList>
+            {openModal ? (
+              <AddFriend setOpenModal={setOpenModal} userId={user.id} />
+            ) : (
+              <></>
+            )}
+          </>
         ) : (
           <>
             <ChatsTitle>Chats..</ChatsTitle>
@@ -113,19 +136,12 @@ const Chat = () => {
         </TopDiv>
         {chat ? <ChatBody chatId={ID} /> : <></>}
         <Texting>
+          <MdAddCircleOutline size={50} color="gray" />
           <InputText
             onChange={(v) => setBody({ ...body, body: v.target.value })}
             value={body.body}
           />
           <SendButton onClick={handleSubmit}>Send</SendButton>
-          <FaPlusCircle
-            style={{
-              position: "absolute",
-              bottom: 15,
-              color: "gray",
-            }}
-            size={40}
-          />
         </Texting>
       </TopDivWrapper>
     </MainDiv>
