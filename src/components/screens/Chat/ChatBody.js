@@ -9,7 +9,7 @@ import MessageCard from "../Messages";
 //styles
 import { ChatBodyDiv, InnerDiv, Line } from "./styles";
 
-const ChatBody = ({ chatId }) => {
+const ChatBody = ({ chatId, update }) => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chatReducer.chats);
   const user = useSelector((state) => state.authReducer.user);
@@ -22,9 +22,11 @@ const ChatBody = ({ chatId }) => {
   } else {
     loading = <h3>loading...</h3>;
   }
+  var test = messages?.length;
+
   useEffect(() => {
     dispatch(fetchChats(chatId));
-  }, [chatId, messages]);
+  }, [chatId, update, test]);
   var messages, loading;
   return <ChatBodyDiv>{chats ? <>{messages}</> : loading}</ChatBodyDiv>;
 };
