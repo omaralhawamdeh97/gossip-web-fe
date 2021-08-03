@@ -1,12 +1,13 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
 // ACTIONS
-export const addMessage = (newMessage) => {
+export const addMessage = (newMessage, update, setUpdate) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("myToken");
       instance.defaults.headers.common.Authorization = `Bearer ${token}`;
       const res = await instance.post(`/messages`, newMessage);
+      setUpdate(update + 1);
       dispatch({
         type: actionTypes.ADD_MESSAGE,
         payload: { newMessage: res.data },
