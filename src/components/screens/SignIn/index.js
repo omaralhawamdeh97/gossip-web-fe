@@ -1,15 +1,20 @@
 //react
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+
 //styles
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
 import { SignInScreen, Title, Form, Label, Error } from "./styles";
+
 //components
 import SigninButton from "../../buttons/SigninButton";
+
 //redux
 import { useDispatch } from "react-redux";
+
+//actions
 import { signin } from "../../../store/actions/authActions";
 
 const SignIn = () => {

@@ -1,11 +1,20 @@
+//react
 import React, { useState } from "react";
+
 //Modal
 import Modal from "@material-ui/core/Modal";
-import { Form, Label, Save, SaveDiv } from "../Profile/styles";
 import { Backdrop, Fade, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+
+//redux
 import { useDispatch } from "react-redux";
+
+//actions
 import { addFriend } from "../../../store/actions/friendActions";
+
+//styles
+import { Form, Label, Save, SaveDiv } from "../Profile/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { Error } from "../SignIn/styles";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -27,15 +36,18 @@ const AddFriend = ({ setOpenModal, userId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  const [friend, setFriend] = useState("none");
   const [open, setOpen] = useState(true);
   const [friendship, setFriendship] = useState({
     firstUserId: userId,
     secondUserId: "",
   });
 
-  const handleAdd = () => {
-    dispatch(addFriend(friendship, setOpen));
+  const handleAdd = (event) => {
+    event.preventDefault();
+    dispatch(addFriend(friendship, setOpen, setFriend));
   };
+
   const handleChange = (event) => {
     setFriendship({
       ...friendship,
@@ -69,6 +81,9 @@ const AddFriend = ({ setOpenModal, userId }) => {
                 type="text"
                 size="small"
               />
+              <Error style={{ display: friend }}>
+                User name does not exist
+              </Error>
 
               <SaveDiv>
                 <Save type="submit">Add</Save>
