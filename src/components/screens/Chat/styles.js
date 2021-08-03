@@ -12,8 +12,8 @@ export const Header = styled.div`
   margin-inline: 10px;
 `;
 export const HeaderTwo = styled.div`
-  border-bottom-style: ${(props) => (props.line ? "none" : "solid")};
-  border-bottom-color: gray;
+  /* border-bottom-style: ${(props) => (props.line ? "none" : "solid")}; */
+  /* border-bottom-color: gray; */
   padding-bottom: 10px;
   border-width: 0.01px;
 `;
@@ -88,8 +88,9 @@ export const Texting = styled.div`
 export const ChatsTitle = styled.h3`
   font-style: italic;
   margin-top: 25px;
-
+  margin-bottom: 25px;
   font-size: 25;
+  text-align: center;
 `;
 
 export const ChatBodyDiv = styled.div`
@@ -108,7 +109,7 @@ export const Line = styled.text`
 export const FriendList = styled.div`
   align-items: flex-start;
   overflow-y: scroll;
-  height: 50vh;
+  height: 40vh;
 `;
 
 export const ListHeader = styled.div`
@@ -120,4 +121,33 @@ export const ListHeader = styled.div`
   margin-inline: 7px;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const GroupCardStyles = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const Members = styled.h6`
+  color: #3c8dad;
+`;
+
+export const ChatButton = styled.button`
+  background-color: transparent;
+  height: 80px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
+  margin-top: 10px;
+  width: 100%;
+  align-self: center;
+  border-width: 0;
+`;
+
+export const ChatList = styled.div`
+  align-items: flex-start;
+  overflow-y: scroll;
+  height: 70vh;
 `;

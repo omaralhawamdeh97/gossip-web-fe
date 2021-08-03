@@ -16,10 +16,14 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageSearchIcon from "@material-ui/icons/ImageSearch";
+
 //Redux
 import { useDispatch, useSelector } from "react-redux";
+
 //React
 import { useState } from "react";
+
+//actions
 import {
   updateUser,
   updateUserImage,

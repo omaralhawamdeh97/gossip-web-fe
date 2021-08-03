@@ -1,6 +1,11 @@
 //Icons
 import { FaAlignJustify } from "react-icons/fa";
-import { MdAddCircleOutline, MdPersonAdd, MdGroupAdd } from "react-icons/md";
+import {
+  MdAddCircleOutline,
+  MdPersonAdd,
+  MdGroupAdd,
+  MdChatBubbleOutline,
+} from "react-icons/md";
 
 //Styling
 import {
@@ -18,6 +23,8 @@ import {
   ChatsTitle,
   FriendList,
   ListHeader,
+  ChatButton,
+  ChatList,
 } from "./styles";
 
 //Components
@@ -32,10 +39,12 @@ import { useHistory } from "react-router";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFoundUser } from "../../../store/actions/authActions";
+import { fetchFoundUser, signout } from "../../../store/actions/authActions";
 import ChatCard from "./ChatCard";
 import AddFriend from "./AddFriend";
 import NewGroup from "../../GroupCard/NewGroup";
+import { addChat } from "../../../store/actions/chatActions";
+import { Button } from "@material-ui/core";
 
 const Chat = () => {
   //Hooks
@@ -52,7 +61,7 @@ const Chat = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalTwo, setOpenModalTwo] = useState(false);
   const [update, setUpdate] = useState(0);
-
+  const [query, setQuery] = useState("");
   useEffect(() => {
     dispatch(fetchFoundUser(user));
   }, []);
@@ -64,6 +73,7 @@ const Chat = () => {
     dispatch(addMessage({ ...body, chatId: ID }, update, setUpdate));
     setBody({ ...body, body: "" });
   };
+
   const handleProfile = () => {
     if (profile === true) {
       setProfile(false);
@@ -71,26 +81,48 @@ const Chat = () => {
       setProfile(true);
     }
   };
+
+  const handleClick = (friend) => {
+    // if(friend.chats.find(chat=>chat.id===user.chats.find(x=>x.id===chat.id)))
+    console.log(friend.chats.find((chat) => chat.name === user.username));
+
+    const chat = {
+      userId: user.id,
+      name: friend.username,
+    };
+    const newArr = [
+      { userId: user.id, chatId: "" },
+      { userId: friend.id, chatId: "" },
+    ];
+    // dispatch(addChat(chat, newArr, history));
+  };
   var friends = [];
   if (user.from || user.to) {
     const fromList = user.from.map((friend) => friend);
     const toList = user.to.map((friend) => friend);
     friends = [...fromList, ...toList].map((friend) => (
-      <FriendCard friend={friend} user={user} />
+      <FriendCard
+        onClick={() => handleClick(friend)}
+        friend={friend}
+        user={user}
+      />
     ));
   }
+
   var chatList;
   if (user.chats) {
-    chatList = user.chats.map((chat) => (
-      <button
-        onClick={() => {
-          setChat(chat);
-          setID(chat.id);
-        }}
-      >
-        <ChatCard chat={chat} friends={friends} />
-      </button>
-    ));
+    chatList = user.chats
+      .filter((chat) => chat.name.includes(query))
+      .map((chat) => (
+        <ChatButton
+          onClick={() => {
+            setChat(chat);
+            setID(chat.id);
+          }}
+        >
+          <ChatCard chat={chat} friends={friends} />
+        </ChatButton>
+      ));
   }
   if (!user) history.replace("/");
   const checkField = body.body === "" ? true : false;
@@ -100,7 +132,9 @@ const Chat = () => {
       <ChatDiv>
         <HeaderTwo line={profile}>
           <Header>
-            <h2>Gossipies</h2>
+            <h2>
+              Let's Gossip <MdChatBubbleOutline style={{ marginBottom: 40 }} />
+            </h2>
             <FaAlignJustify size={25} onClick={handleProfile} />
           </Header>
           {profile ? (
@@ -108,7 +142,10 @@ const Chat = () => {
               <ProfileTitle>Profile</ProfileTitle>
             </>
           ) : (
-            <Input placeholder={"Search here..."} />
+            <Input
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={"Search here..."}
+            />
           )}
         </HeaderTwo>
         {profile ? (
@@ -140,11 +177,21 @@ const Chat = () => {
             ) : (
               <></>
             )}
+            <Button
+              onClick={() => dispatch(signout(history))}
+              style={{ marginTop: "60px" }}
+            >
+              Sign Out
+            </Button>
           </>
         ) : (
           <>
-            <ChatsTitle>Chats..</ChatsTitle>
-            {chatList?.length !== 0 ? chatList : <h6>no chats</h6>}
+            <ChatsTitle>Gossips</ChatsTitle>
+            {chatList?.length !== 0 ? (
+              <ChatList>{chatList}</ChatList>
+            ) : (
+              <h2>No Chats </h2>
+            )}
           </>
         )}
       </ChatDiv>

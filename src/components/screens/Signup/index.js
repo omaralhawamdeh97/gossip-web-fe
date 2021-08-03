@@ -7,10 +7,14 @@ import { SignUpScreen, Title, Form, Label } from "./styles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Grid, IconButton, InputAdornment, TextField } from "@material-ui/core";
+
 //components
 import SignupButton from "../../buttons/SignupButton";
+
 //redux
 import { useDispatch } from "react-redux";
+
+//actions
 import { signup } from "../../../store/actions/authActions";
 
 const SignUp = () => {
@@ -47,6 +51,7 @@ const SignUp = () => {
   };
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   return (
     <SignUpScreen>
       <Title>Sign Up </Title>

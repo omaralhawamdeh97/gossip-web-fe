@@ -1,7 +1,8 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
 
-export const addFriend = (newFriend, setOpen) => {
+//actions
+export const addFriend = (newFriend, setOpen, setFriend) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("myToken");
@@ -13,11 +14,8 @@ export const addFriend = (newFriend, setOpen) => {
       });
       setOpen(false);
     } catch (error) {
-      if (error.message.includes("401")) {
-        dispatch({
-          type: actionTypes.SET_USER,
-          payload: null,
-        });
+      if (error.message.includes("404")) {
+        setFriend("");
       } else {
         console.log(error);
       }

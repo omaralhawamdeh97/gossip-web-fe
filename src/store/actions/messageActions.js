@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionsTypes";
 import instance from "./instance";
+
 // ACTIONS
 export const addMessage = (newMessage, update, setUpdate) => {
   return async (dispatch) => {
