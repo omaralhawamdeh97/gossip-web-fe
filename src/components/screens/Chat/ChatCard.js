@@ -26,8 +26,12 @@ const ChatCard = ({ chat }) => {
       ) : (
         <>
           <FriendCardImage
-            src="https://resources.arcamax.com/newspics/186/18665/1866578.jpg"
-            alt={foundFriend?.username}
+            src={
+              chat.image
+                ? chat.image
+                : "https://resources.arcamax.com/newspics/186/18665/1866578.jpg"
+            }
+            alt={chat?.name}
           />
           <GroupCardStyles>
             <h4 style={{ paddingLeft: 15 }}>{chat?.name}</h4>

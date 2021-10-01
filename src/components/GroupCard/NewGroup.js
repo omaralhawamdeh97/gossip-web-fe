@@ -48,7 +48,6 @@ const NewGroup = ({ setOpenModalTwo }) => {
 
   const handleAddedArray = (friendId) => {
     addedFriends.push({ userId: friendId, chatId: "" });
-    console.log(addedFriends);
   };
 
   if (user.from || user.to) {
