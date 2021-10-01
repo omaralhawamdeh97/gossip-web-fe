@@ -62,10 +62,11 @@ const Chat = () => {
   const [openModalTwo, setOpenModalTwo] = useState(false);
   const [update, setUpdate] = useState(0);
   const [query, setQuery] = useState("");
+  const [profile, setProfile] = useState(false);
+
   useEffect(() => {
     dispatch(fetchFoundUser(user));
-  }, []);
-  const [profile, setProfile] = useState(false);
+  }, [profile]);
 
   //methods
   const handleSubmit = (event) => {
@@ -83,9 +84,6 @@ const Chat = () => {
   };
 
   const handleClick = (friend) => {
-    // if(friend.chats.find(chat=>chat.id===user.chats.find(x=>x.id===chat.id)))
-    console.log(friend.chats.find((chat) => chat.name === user.username));
-
     const chat = {
       userId: user.id,
       name: friend.username,
@@ -94,7 +92,7 @@ const Chat = () => {
       { userId: user.id, chatId: "" },
       { userId: friend.id, chatId: "" },
     ];
-    // dispatch(addChat(chat, newArr, history));
+    dispatch(addChat(chat, newArr, setProfile));
   };
   var friends = [];
   if (user.from || user.to) {
@@ -112,7 +110,7 @@ const Chat = () => {
   var chatList;
   if (user.chats) {
     chatList = user.chats
-      .filter((chat) => chat.name.includes(query))
+      .filter((chat) => chat.name.toLowerCase().includes(query.toLowerCase()))
       .map((chat) => (
         <ChatButton
           onClick={() => {
@@ -144,7 +142,7 @@ const Chat = () => {
           ) : (
             <Input
               onChange={(event) => setQuery(event.target.value)}
-              placeholder={"Search here..."}
+              placeholder={"Search gossip here..."}
             />
           )}
         </HeaderTwo>
@@ -197,9 +195,17 @@ const Chat = () => {
       </ChatDiv>
       <TopDivWrapper>
         <TopDiv>
-          <h2>{user.username}</h2>
+          <h2>Hello, {user.username}</h2>
         </TopDiv>
-        {chat ? <ChatBody chatId={ID} update={update} /> : <></>}
+        {chat ? (
+          <ChatBody chatId={ID} update={update} setProfile={setProfile} />
+        ) : (
+          <>
+            <h2 style={{ textAlign: "center", color: "#EEEEEE" }}>
+              Gossip here...
+            </h2>
+          </>
+        )}
         <Texting>
           <MdAddCircleOutline size={50} color="gray" />
           <InputText

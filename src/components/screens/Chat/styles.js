@@ -20,7 +20,7 @@ export const HeaderTwo = styled.div`
 
 export const ChatDiv = styled.div`
   padding-top: 10px;
-  width: 350px;
+  width: 25%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: column;

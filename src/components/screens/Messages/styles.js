@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MessageCardStyle = styled.div`
   background-color: lightgray;
-  height: 65px;
+  height: 100%;
   width: fit-content;
   display: flex;
   flex-direction: column;

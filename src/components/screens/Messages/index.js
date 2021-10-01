@@ -1,5 +1,6 @@
 //styles
 import { MessageCardStyle } from "./styles";
+import moment from "moment";
 
 const MessageCard = ({ message, user, messageId, chat }) => {
   const sender = chat.users.find((user) => user.id === message.userId);
